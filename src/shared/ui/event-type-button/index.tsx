@@ -26,7 +26,7 @@ const defaultComponentStyles = css`
 `
 
 const activeElementStyles = css`
-    background: white;
+    background: #F4F5F9;
     border: 1px solid #929AA9;
     > span {
         visibility: visible;
@@ -34,15 +34,15 @@ const activeElementStyles = css`
 `
 
 const EventTypeButton = styled.button<IEventType8uttonProps>`
-  ${({ index, length, activeIndex }) => {
+  ${({ $elementIndex, $elementsCount, $activeIndex }) => {
         const initialRotateRadAngle = degToRad(DEFAUILT_ROTATE_DEG_ANGLE)
-        const elementRotationRadAngle = 2 * Math.PI / length * index
-        const activeElementRotationRadAngle = 2 * Math.PI / length * activeIndex
+        const elementRotationRadAngle = 2 * Math.PI / $elementsCount * $elementIndex
+        const activeElementRotationRadAngle = 2 * Math.PI / $elementsCount * $activeIndex
         const rotateRadAngle = elementRotationRadAngle - initialRotateRadAngle - activeElementRotationRadAngle
 
 
         // TODO: refactor to avoid code duplication
-        return activeIndex === index
+        return $activeIndex === $elementIndex
             ? `
             ${defaultComponentStyles}
             ${activeElementStyles}

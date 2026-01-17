@@ -3,5 +3,11 @@ interface IHistoryEvent {
     datetime: Date
     type: string
 }
+// TODO: move?
+interface IIconProps {
+    color?: string
+    width?: number
+    height?: number
+}
 
-export type { IHistoryEvent }
+export type { IHistoryEvent, IIconProps }

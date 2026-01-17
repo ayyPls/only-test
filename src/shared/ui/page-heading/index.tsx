@@ -11,6 +11,7 @@ const PageHeading = styled.h1`
     line-height: 120%;
     white-space: pre-line;
     width: fit-content;
+    z-index: 2;
 
     &::before {
       content: "";

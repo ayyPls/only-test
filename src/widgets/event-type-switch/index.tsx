@@ -17,10 +17,10 @@ const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTyp
                                 type='button'
                                 onClick={() => onClickEventType(index)}
                                 // TODO: fix error with html-attribute
-                                activeIndex={activeEventTypeIndex}
+                                $activeIndex={activeEventTypeIndex}
                                 key={index}
-                                index={index}
-                                length={array.length}
+                                $elementIndex={index}
+                                $elementsCount={array.length}
                             >
                                 <span>{index + 1}</span>
                             </EventTypeButton>
@@ -36,6 +36,7 @@ const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTyp
         <div className='line-vertical' />
         <div className='circle-action-buttons'>
             <span>{`0${activeEventTypeIndex + 1}/0${eventTypes.length}`}</span>
+            {/* TODO: disabled button styles */}
             <div>
                 <button disabled={activeEventTypeIndex === 0} type='button' onClick={onClickPrevEventType}>
                     <img src='/assets/arrow.svg' alt='left arrow' />

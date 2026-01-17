@@ -4,35 +4,10 @@ import 'swiper/css/navigation';
 import { CircleButton } from './styled';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { EVENTS } from './shared/const/events';
+import gsap from 'gsap';
 
-const EVENTS = [
-  {
-    datetime: new Date('2013-09-13'),
-    description: "13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды",
-    type: "Наука"
-  },
-  {
-    datetime: new Date('2016-04-01'),
-    description: "13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды 13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды 13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды",
-    type: "Наука"
-  },
-  {
-    datetime: new Date('2020-07-20'),
-    description: "13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды",
-    type: "Наука"
-  },
-  {
-    datetime: new Date('2022-01-01'),
-    description: "",
-    type: "Наука"
-  },
-  {
-    datetime: new Date('2023-01-01'),
-    description: "",
-    type: "2"
-  },
-]
 
 const CIRCLE_ITEMS_UNIQUE = EVENTS.reduce<Array<string>>((acc, item) => {
   if (acc.includes(item.type)) {
@@ -41,6 +16,40 @@ const CIRCLE_ITEMS_UNIQUE = EVENTS.reduce<Array<string>>((acc, item) => {
   else acc.push(item.type)
   return acc
 }, [])
+
+const Digit = ({ value }: { value: number }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    gsap.to(ref.current, {
+      y: `-${value * 10}%`,
+      duration: 0.6,
+      ease: "power2.out"
+    });
+  }, [value]);
+
+  return (
+    <span className="digit">
+      <span ref={ref} className="digit-stack">
+        {Array.from({ length: 10 }, (_, i) => (
+          <span key={i}>{i}</span>
+        ))}
+      </span>
+    </span>
+  );
+};
+
+const EventYear = ({ year }: { year: number }) => {
+  const digits = String(year).padStart(4, "0").split("");
+
+  return (
+    <div className="year">
+      {digits.map((d, i) => (
+        <Digit key={i} value={Number(d)} />
+      ))}
+    </div>
+  );
+};
 
 // TODO: app theme
 const App = () => {
@@ -64,32 +73,30 @@ const App = () => {
 
   return (
     // TODO: adaptive layout
-    // TODO: container should not count border width as container width 
-    <div className="layout" style={{ margin: "0 160px 0 320px", borderLeft: '1px solid #E3E6ED', borderRight: '1px solid #E3E6ED', height: '100vh' }}>
-      {/* <div className='line' style={{border: '1px solid #E3E6ED', height: '100%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(calc(-50% + 80px), -50%)'}}/> */}
-      <div style={{ width: '100%', height: '100%' }}>
-        {/* TODO: look for a css way to do line break */}
-        <h1>Исторические <br />даты</h1>
-        <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-          {/* TODO: research how to make it not appear in robots.txt? mark it as a decorative element */}
-          {/* TODO: set elements size to layout size and make it not break on elements add on page */}
+    // TODO: container should not count border width as container width
+    <div className="layout">
 
-          {/* TODO: style as circle items to center correctly */}
+      {/* TODO: look for a css way to do line break */}
+      <h1>Исторические <br />даты</h1>
 
-          {/* TODO: circle border should be above circle text */}
-          <div className='circle'>
-            {/* <div className='line' style={{ zIndex: -1, border: '1px solid #E3E6ED', height: '100%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(calc(-50% + 80px), -50%)' }} /> */}
-            <div className='line-vertical' />
-            {/* <div className='line' style={{ zIndex: -1, border: '1px solid #E3E6ED', width: '100%', position: 'absolute', left: '50%', transform: 'translate(-50%, -50%)' }} /> */}
-            <p className='years-text' >
-              {/* TODO: numbers counter animation */}
-              <mark>2015</mark>&nbsp;&nbsp;<mark>2022</mark>
-            </p>
-            <div className='circle-items'>
-              {
-                // TODO: can you handle key param indide child react component instead of passing another param?
-                // TODO: render event type name
-                CIRCLE_ITEMS_UNIQUE.map((item, index, array) => (
+      <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', position: 'relative', minHeight: '100vh' }}>
+        {/* TODO: research how to make it not appear in robots.txt? mark it as a decorative element */}
+        {/* TODO: set elements size to layout size and make it not break on elements add on page */}
+
+        {/* TODO: circle border should be above circle text */}
+        <div className='circle'>
+          <div className='years-text'>
+            <mark><EventYear year={filteredEventsByType[0].datetime.getFullYear()} /></mark>
+            &nbsp;&nbsp;
+            <mark><EventYear year={filteredEventsByType[filteredEventsByType.length - 1].datetime.getFullYear()} /></mark>
+          </div>
+          <div className='circle-items'>
+            {
+              // TODO: can you handle key param indide child react component instead of passing another param?
+              // TODO: render event type name
+              CIRCLE_ITEMS_UNIQUE.map((item, index, array) => (
+                // TODO: refactor component
+                <div key={index} style={{ display: 'flex', gap: 20 }}>
                   <CircleButton
                     type='button'
                     onClick={() => handleClickEventType(index)}
@@ -100,23 +107,27 @@ const App = () => {
                   >
                     <span>{index + 1}</span>
                   </CircleButton>
-                )
-                )
-              }
-            </div>
-          </div>
-          <div className='circle-action-buttons'>
-            <span>{`0${activeEventTypeIndex + 1}/0${CIRCLE_ITEMS_UNIQUE.length}`}</span>
-            <div>
-              <button disabled={activeEventTypeIndex === CIRCLE_ITEMS_UNIQUE.length - 1 || activeEventTypeIndex === 0} type='button' onClick={handleClickPrevEventType}>
-                <img src='/assets/arrow.svg' alt='left arrow' />
-              </button>
-              <button disabled={activeEventTypeIndex === CIRCLE_ITEMS_UNIQUE.length - 1 || activeEventTypeIndex === 0} type='button' onClick={handleClickNextEventType}>
-                <img src='/assets/arrow.svg' alt='right arrow' />
-              </button>
-            </div>
+                  <div className='active-item-text'>{item}</div>
+                </div>
+              )
+              )
+            }
           </div>
         </div>
+        <div className='line-horizontal' />
+
+        <div className='circle-action-buttons'>
+          <span>{`0${activeEventTypeIndex + 1}/0${CIRCLE_ITEMS_UNIQUE.length}`}</span>
+          <div>
+            <button disabled={activeEventTypeIndex === 0} type='button' onClick={handleClickPrevEventType}>
+              <img src='/assets/arrow.svg' alt='left arrow' />
+            </button>
+            <button disabled={activeEventTypeIndex === CIRCLE_ITEMS_UNIQUE.length - 1} type='button' onClick={handleClickNextEventType}>
+              <img src='/assets/arrow.svg' alt='right arrow' />
+            </button>
+          </div>
+        </div>
+
         <div className='swiper-container'>
           {/* TODO: add navigation buttons */}
           <Swiper slidesPerView={3} spaceBetween={80} modules={[Navigation]}>
@@ -134,6 +145,8 @@ const App = () => {
             }
           </Swiper>
         </div>
+        <div className='line-vertical' />
+
       </div>
     </div>
   );

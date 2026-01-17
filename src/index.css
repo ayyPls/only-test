@@ -1,15 +1,19 @@
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   font-family: "PT Sans", "Arial", sans-serif;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
 }
-button:not([disabled]) { 
+
+button:not([disabled]) {
   cursor: pointer;
 }
 
 h1 {
-  position: relative;
+  position: absolute;
   top: 170px;
   display: flex;
   margin: 0;
@@ -28,8 +32,10 @@ h1::before {
 }
 
 .years-text {
+  display: inline-flex;
   position: relative;
 }
+
 
 .circle {
   display: flex;
@@ -42,6 +48,8 @@ h1::before {
   border: 1px solid #E3E6ED;
   position: relative;
   margin: 0 auto;
+  margin-top: 215px;
+  z-index: 2;
 }
 
 .circle>.years-text {
@@ -134,11 +142,11 @@ h1::before {
   line-height: 30px;
   margin: 0;
   /* NOTE: in case if swiper card description needs to be truncated */
-  /* text-overflow: ellipsis;
+  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  overflow: hidden; */
+  overflow: hidden;
 }
 
 .swiper-container {
@@ -148,6 +156,50 @@ h1::before {
 
 .line-vertical {
   position: absolute;
+  min-height: 100%;
+  border-right: 1px solid #E3E6ED;
+  left: 50%;
+  top: 0;
+}
+
+.line-horizontal {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #E3E6ED;
+  /* top: 0; */
+  bottom: calc(530px / 2);
+}
+
+.layout {
+  margin: 0 160px 0 320px;
   height: 100%;
-  border: 1px solid #E3E6ED;
+  border-left: 1px solid #E3E6ED;
+  border-right: 1px solid #E3E6ED;
+  min-height: 100vh;
+}
+
+/* EventYear comnponent styles */
+
+.year {
+  display: flex;
+  line-height: 1;
+}
+
+.digit {
+  width: 1ch;
+  height: 1em;
+  overflow: hidden;
+  position: relative;
+}
+
+.digit-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.digit-stack span {
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

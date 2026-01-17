@@ -20,6 +20,12 @@ const defaultComponentStyles = css`
     justify-content: center;
     transform-origin: center center;
     transition: transform .5s ease-in-out, background .5s;
+    > span {
+        visibility: hidden;
+    }
+    > .active-item-text {
+        transition: opacity .8s ease-in-out;
+    }
 `
 
 const activeElementStyles = css`
@@ -55,9 +61,19 @@ const CircleButton = styled.button<ICircleButtonProps>`
                 scale(1);
             
             > span {
-                visibility: visible;
                 transform: rotate(${-rotateRadAngle}rad);
-            }`
+            }
+            + .active-item-text {
+                // position: absolute;
+                // font-size: 20px;
+                // color: #42567A;
+                // font-weight: bold;
+                // visibility: visible;
+                // opacity: 1;
+                // transition: opacity .8s ease-in-out;
+                // transform: rotate(${-rotateRadAngle}rad);
+            }
+            `
             : `
             ${defaultComponentStyles}
             transform: translate(-50%, -50%)
@@ -74,10 +90,9 @@ const CircleButton = styled.button<ICircleButtonProps>`
             }
 
             > span {
-                visibility: hidden;
                 transform: rotate(${-rotateRadAngle}rad);
             }
-    `;
+        `;
     }}
 `;
 

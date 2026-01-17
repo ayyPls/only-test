@@ -7,17 +7,17 @@ import { Navigation } from 'swiper/modules';
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { EVENTS } from './shared/const/events';
 import gsap from 'gsap';
+import { PageHeading } from './shared/ui/page-heading';
 
 
-const CIRCLE_ITEMS_UNIQUE = EVENTS.reduce<Array<string>>((acc, item) => {
-  if (acc.includes(item.type)) {
-    return acc
+const UNIOQUE_EVENT_TYPES = EVENTS.reduce<Array<string>>((acc, item) => {
+  if (!acc.includes(item.type)) {
+    acc.push(item.type)
   }
-  else acc.push(item.type)
   return acc
 }, [])
 
-const Digit = ({ value }: { value: number }) => {
+const YearDigit = ({ value }: { value: number }) => {
   const ref = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
@@ -45,7 +45,7 @@ const EventYear = ({ year }: { year: number }) => {
   return (
     <div className="year">
       {digits.map((d, i) => (
-        <Digit key={i} value={Number(d)} />
+        <YearDigit key={i} value={Number(d)} />
       ))}
     </div>
   );
@@ -55,7 +55,7 @@ const EventYear = ({ year }: { year: number }) => {
 const App = () => {
   const [activeEventTypeIndex, setActiveEventTypeIndex] = useState(0)
   const filteredEventsByType = useMemo(() => {
-    return EVENTS.filter(event => event.type === CIRCLE_ITEMS_UNIQUE[activeEventTypeIndex])
+    return EVENTS.filter(event => event.type === UNIOQUE_EVENT_TYPES[activeEventTypeIndex])
       .sort((a, b) => a.datetime > b.datetime ? 1 : -1)
   }, [activeEventTypeIndex])
 
@@ -64,20 +64,19 @@ const App = () => {
   }, [])
 
   const handleClickNextEventType = useCallback(() => {
-    setActiveEventTypeIndex((prevIndex) => (prevIndex + 1) % CIRCLE_ITEMS_UNIQUE.length)
+    setActiveEventTypeIndex((prevIndex) => (prevIndex + 1) % UNIOQUE_EVENT_TYPES.length)
   }, [])
 
   const handleClickPrevEventType = useCallback(() => {
-    setActiveEventTypeIndex((prevIndex) => (prevIndex - 1 + CIRCLE_ITEMS_UNIQUE.length) % CIRCLE_ITEMS_UNIQUE.length)
+    setActiveEventTypeIndex((prevIndex) => (prevIndex - 1 + UNIOQUE_EVENT_TYPES.length) % UNIOQUE_EVENT_TYPES.length)
   }, [])
 
   return (
     // TODO: adaptive layout
     // TODO: container should not count border width as container width
     <div className="layout">
-
       {/* TODO: look for a css way to do line break */}
-      <h1>Исторические <br />даты</h1>
+      <PageHeading>Исторические <br />даты</PageHeading>
 
       <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', position: 'relative', minHeight: '100vh' }}>
         {/* TODO: research how to make it not appear in robots.txt? mark it as a decorative element */}
@@ -94,7 +93,7 @@ const App = () => {
             {
               // TODO: can you handle key param indide child react component instead of passing another param?
               // TODO: render event type name
-              CIRCLE_ITEMS_UNIQUE.map((item, index, array) => (
+              UNIOQUE_EVENT_TYPES.map((item, index, array) => (
                 // TODO: refactor component
                 <div key={index} style={{ display: 'flex', gap: 20 }}>
                   <CircleButton
@@ -117,12 +116,12 @@ const App = () => {
         <div className='line-horizontal' />
 
         <div className='circle-action-buttons'>
-          <span>{`0${activeEventTypeIndex + 1}/0${CIRCLE_ITEMS_UNIQUE.length}`}</span>
+          <span>{`0${activeEventTypeIndex + 1}/0${UNIOQUE_EVENT_TYPES.length}`}</span>
           <div>
             <button disabled={activeEventTypeIndex === 0} type='button' onClick={handleClickPrevEventType}>
               <img src='/assets/arrow.svg' alt='left arrow' />
             </button>
-            <button disabled={activeEventTypeIndex === CIRCLE_ITEMS_UNIQUE.length - 1} type='button' onClick={handleClickNextEventType}>
+            <button disabled={activeEventTypeIndex === UNIOQUE_EVENT_TYPES.length - 1} type='button' onClick={handleClickNextEventType}>
               <img src='/assets/arrow.svg' alt='right arrow' />
             </button>
           </div>
@@ -133,7 +132,7 @@ const App = () => {
           <Swiper slidesPerView={3} spaceBetween={80} modules={[Navigation]}>
             {
               filteredEventsByType.map((event, index) => {
-                return event.type === CIRCLE_ITEMS_UNIQUE[activeEventTypeIndex] ?
+                return event.type === UNIOQUE_EVENT_TYPES[activeEventTypeIndex] ?
                   <SwiperSlide key={index}>
                     <div className='swiper-slide-card'>
                       <h2 className='title'>{event.datetime.getFullYear()}</h2>

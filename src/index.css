@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   font-family: "PT Sans", "Arial", sans-serif;
@@ -12,7 +13,7 @@ button:not([disabled]) {
   cursor: pointer;
 }
 
-h1 {
+/* h1 {
   position: absolute;
   top: 170px;
   display: flex;
@@ -29,7 +30,7 @@ h1::before {
   border: 2px solid;
   border-image: linear-gradient(to bottom, #3877EE, #EF5DA8) 1;
   margin: 7px 80px 7px 0;
-}
+} */
 
 .years-text {
   display: inline-flex;
@@ -181,12 +182,14 @@ h1::before {
 /* EventYear comnponent styles */
 
 .year {
+  /* prevents messing around with text on user-select (breaks text placement on text select with keyboard) */
+  user-select: none;
   display: flex;
   line-height: 1;
 }
 
 .digit {
-  width: 1ch;
+  width: calc(1ch - 0.02em);
   height: 1em;
   overflow: hidden;
   position: relative;

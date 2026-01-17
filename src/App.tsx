@@ -1,13 +1,8 @@
 import './App.css';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { CircleButton } from './styled';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { EVENTS } from './shared/const/events';
 import gsap from 'gsap';
-import { PageHeading } from './shared/ui/page-heading';
+import { PageHeading, PageContentContainer, EventSwiper, EventTypeButton } from './shared/ui';
+import { EVENTS } from './shared/const';
 
 
 const UNIOQUE_EVENT_TYPES = EVENTS.reduce<Array<string>>((acc, item) => {
@@ -77,8 +72,8 @@ const App = () => {
     <div className="layout">
       {/* TODO: look for a css way to do line break */}
       <PageHeading>Исторические <br />даты</PageHeading>
+      <PageContentContainer>
 
-      <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', position: 'relative', minHeight: '100vh' }}>
         {/* TODO: research how to make it not appear in robots.txt? mark it as a decorative element */}
         {/* TODO: set elements size to layout size and make it not break on elements add on page */}
 
@@ -96,7 +91,7 @@ const App = () => {
               UNIOQUE_EVENT_TYPES.map((item, index, array) => (
                 // TODO: refactor component
                 <div key={index} style={{ display: 'flex', gap: 20 }}>
-                  <CircleButton
+                  <EventTypeButton
                     type='button'
                     onClick={() => handleClickEventType(index)}
                     activeIndex={activeEventTypeIndex}
@@ -105,7 +100,7 @@ const App = () => {
                     length={array.length}
                   >
                     <span>{index + 1}</span>
-                  </CircleButton>
+                  </EventTypeButton>
                   <div className='active-item-text'>{item}</div>
                 </div>
               )
@@ -129,24 +124,11 @@ const App = () => {
 
         <div className='swiper-container'>
           {/* TODO: add navigation buttons */}
-          <Swiper slidesPerView={3} spaceBetween={80} modules={[Navigation]}>
-            {
-              filteredEventsByType.map((event, index) => {
-                return event.type === UNIOQUE_EVENT_TYPES[activeEventTypeIndex] ?
-                  <SwiperSlide key={index}>
-                    <div className='swiper-slide-card'>
-                      <h2 className='title'>{event.datetime.getFullYear()}</h2>
-                      <p className='description'>{event.description}</p>
-                    </div>
-                  </SwiperSlide> : null
-              }
-              )
-            }
-          </Swiper>
+          <EventSwiper events={filteredEventsByType} />
         </div>
         <div className='line-vertical' />
 
-      </div>
+      </PageContentContainer>
     </div>
   );
 }

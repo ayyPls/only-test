@@ -41,7 +41,7 @@ const degToRad = (degrees: number) => {
     return (degrees % 360) * (Math.PI / 180)
 }
 
-const CircleButton = styled.button<ICircleButtonProps>`
+const EventTypeButton = styled.button<ICircleButtonProps>`
   ${({ index, length, activeIndex }) => {
         const initialRotateRadAngle = degToRad(DEFAUILT_ROTATE_DEG_ANGLE)
         const elementRotationRadAngle = 2 * Math.PI / length * index
@@ -96,4 +96,4 @@ const CircleButton = styled.button<ICircleButtonProps>`
     }}
 `;
 
-export { CircleButton }
+export { EventTypeButton }

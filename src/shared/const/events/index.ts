@@ -1,5 +1,6 @@
+import { IHistoryEvent } from "../../interface"
 
-const EVENTS = [
+const EVENTS: Array<IHistoryEvent> = [
   {
     datetime: new Date('2013-09-13'),
     description: "13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды",

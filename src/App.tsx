@@ -1,8 +1,8 @@
-import './App.css';
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { PageHeading, PageContentContainer, EventSwiper, EventTypeButton } from './shared/ui';
+import { useCallback, useMemo, useState } from 'react';
+import { PageHeading, PageContentContainer, EventSwiper, EventDateRange } from './shared/ui';
+import { EventTypeSwitch } from './widgets';
 import { EVENTS } from './shared/const';
+import './App.css';
 
 
 const UNIOQUE_EVENT_TYPES = EVENTS.reduce<Array<string>>((acc, item) => {
@@ -12,44 +12,10 @@ const UNIOQUE_EVENT_TYPES = EVENTS.reduce<Array<string>>((acc, item) => {
   return acc
 }, [])
 
-const YearDigit = ({ value }: { value: number }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useLayoutEffect(() => {
-    gsap.to(ref.current, {
-      y: `-${value * 10}%`,
-      duration: 0.6,
-      ease: "power2.out"
-    });
-  }, [value]);
-
-  return (
-    <span className="digit">
-      <span ref={ref} className="digit-stack">
-        {Array.from({ length: 10 }, (_, i) => (
-          <span key={i}>{i}</span>
-        ))}
-      </span>
-    </span>
-  );
-};
-
-const EventYear = ({ year }: { year: number }) => {
-  const digits = String(year).padStart(4, "0").split("");
-
-  return (
-    <div className="year">
-      {digits.map((d, i) => (
-        <YearDigit key={i} value={Number(d)} />
-      ))}
-    </div>
-  );
-};
-
 // TODO: app theme
 const App = () => {
   const [activeEventTypeIndex, setActiveEventTypeIndex] = useState(0)
-  const filteredEventsByType = useMemo(() => {
+  const groupedEventsByType = useMemo(() => {
     return EVENTS.filter(event => event.type === UNIOQUE_EVENT_TYPES[activeEventTypeIndex])
       .sort((a, b) => a.datetime > b.datetime ? 1 : -1)
   }, [activeEventTypeIndex])
@@ -71,63 +37,23 @@ const App = () => {
     // TODO: container should not count border width as container width
     <div className="layout">
       {/* TODO: look for a css way to do line break */}
+      {/* <div style={{height: 200}}></div> */}
       <PageHeading>Исторические <br />даты</PageHeading>
       <PageContentContainer>
-
-        {/* TODO: research how to make it not appear in robots.txt? mark it as a decorative element */}
-        {/* TODO: set elements size to layout size and make it not break on elements add on page */}
-
-        {/* TODO: circle border should be above circle text */}
-        <div className='circle'>
-          <div className='years-text'>
-            <mark><EventYear year={filteredEventsByType[0].datetime.getFullYear()} /></mark>
-            &nbsp;&nbsp;
-            <mark><EventYear year={filteredEventsByType[filteredEventsByType.length - 1].datetime.getFullYear()} /></mark>
-          </div>
-          <div className='circle-items'>
-            {
-              // TODO: can you handle key param indide child react component instead of passing another param?
-              // TODO: render event type name
-              UNIOQUE_EVENT_TYPES.map((item, index, array) => (
-                // TODO: refactor component
-                <div key={index} style={{ display: 'flex', gap: 20 }}>
-                  <EventTypeButton
-                    type='button'
-                    onClick={() => handleClickEventType(index)}
-                    activeIndex={activeEventTypeIndex}
-                    key={index}
-                    index={index}
-                    length={array.length}
-                  >
-                    <span>{index + 1}</span>
-                  </EventTypeButton>
-                  <div className='active-item-text'>{item}</div>
-                </div>
-              )
-              )
-            }
-          </div>
-        </div>
-        <div className='line-horizontal' />
-
-        <div className='circle-action-buttons'>
-          <span>{`0${activeEventTypeIndex + 1}/0${UNIOQUE_EVENT_TYPES.length}`}</span>
-          <div>
-            <button disabled={activeEventTypeIndex === 0} type='button' onClick={handleClickPrevEventType}>
-              <img src='/assets/arrow.svg' alt='left arrow' />
-            </button>
-            <button disabled={activeEventTypeIndex === UNIOQUE_EVENT_TYPES.length - 1} type='button' onClick={handleClickNextEventType}>
-              <img src='/assets/arrow.svg' alt='right arrow' />
-            </button>
-          </div>
-        </div>
-
-        <div className='swiper-container'>
-          {/* TODO: add navigation buttons */}
-          <EventSwiper events={filteredEventsByType} />
-        </div>
-        <div className='line-vertical' />
-
+        <EventTypeSwitch
+          eventTypes={UNIOQUE_EVENT_TYPES}
+          activeEventTypeIndex={activeEventTypeIndex}
+          onClickEventType={handleClickEventType}
+          onClickNextEventType={handleClickNextEventType}
+          onClickPrevEventType={handleClickPrevEventType}
+        >
+          <EventDateRange
+            min={groupedEventsByType[0].datetime}
+            max={groupedEventsByType[groupedEventsByType.length - 1].datetime}
+          />
+        </EventTypeSwitch>
+        {/* TODO: add navigation buttons */}
+        <EventSwiper events={groupedEventsByType} />
       </PageContentContainer>
     </div>
   );

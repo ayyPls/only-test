@@ -1,36 +1,8 @@
-* {
-  box-sizing: border-box;
-}
 
-body {
-  margin: 0;
-  font-family: "PT Sans", "Arial", sans-serif;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-}
-
+/* TODO: move in styled-components */
 button:not([disabled]) {
   cursor: pointer;
 }
-
-/* h1 {
-  position: absolute;
-  top: 170px;
-  display: flex;
-  margin: 0;
-  font-size: 56px;
-  color: #42567A;
-  line-height: 120%;
-  white-space: pre-line;
-  width: fit-content;
-}
-
-h1::before {
-  content: "";
-  border: 2px solid;
-  border-image: linear-gradient(to bottom, #3877EE, #EF5DA8) 1;
-  margin: 7px 80px 7px 0;
-} */
 
 .years-text {
   display: inline-flex;
@@ -49,7 +21,6 @@ h1::before {
   border: 1px solid #E3E6ED;
   position: relative;
   margin: 0 auto;
-  /* margin-top: 45px; */
   z-index: 2;
 }
 
@@ -145,11 +116,11 @@ h1::before {
   line-height: 30px;
   margin: 0;
   /* NOTE: in case if swiper card description needs to be truncated */
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  overflow: hidden;
+  overflow: hidden; */
 }
 
 .swiper-container {

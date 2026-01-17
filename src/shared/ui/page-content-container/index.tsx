@@ -6,7 +6,6 @@ const PageContentContainer = styled.div`
     min-height: 100vh;
     display: flex;
     padding-top: 215px;
-    // justify-content: center;
     flex-direction: column;
 `
 

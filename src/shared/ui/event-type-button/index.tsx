@@ -1,10 +1,7 @@
 import styled, { css } from "styled-components";
-
-interface ICircleButtonProps {
-    index: number;
-    length: number;
-    activeIndex: number
-}
+import { IEventType8uttonProps } from "./interface";
+import { DEFAUILT_ROTATE_DEG_ANGLE } from "./const";
+import { degToRad } from "../../utils";
 
 const defaultComponentStyles = css`
     position: absolute;
@@ -36,12 +33,7 @@ const activeElementStyles = css`
     }
 `
 
-const DEFAUILT_ROTATE_DEG_ANGLE = 60
-const degToRad = (degrees: number) => {
-    return (degrees % 360) * (Math.PI / 180)
-}
-
-const EventTypeButton = styled.button<ICircleButtonProps>`
+const EventTypeButton = styled.button<IEventType8uttonProps>`
   ${({ index, length, activeIndex }) => {
         const initialRotateRadAngle = degToRad(DEFAUILT_ROTATE_DEG_ANGLE)
         const elementRotationRadAngle = 2 * Math.PI / length * index

@@ -1,13 +1,153 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "PT Sans", "Arial", sans-serif;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+button:not([disabled]) { 
+  cursor: pointer;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1 {
+  position: relative;
+  top: 170px;
+  display: flex;
+  margin: 0;
+  font-size: 56px;
+  color: #42567A;
+  line-height: 120%;
+  white-space: pre-line;
+  width: fit-content;
+}
+
+h1::before {
+  content: "";
+  border: 2px solid;
+  border-image: linear-gradient(to bottom, #3877EE, #EF5DA8) 1;
+  margin: 7px 80px 7px 0;
+}
+
+.years-text {
+  position: relative;
+}
+
+.circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 530px;
+  height: 530px;
+  border-radius: 100%;
+  border: 1px solid #E3E6ED;
+  position: relative;
+  margin: 0 auto;
+}
+
+.circle>.years-text {
+  font-size: 200px;
+  text-wrap: nowrap;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  line-height: 160px;
+  transform: translateX(-16px);
+}
+
+.circle>.years-text>mark:first-child {
+  color: #5D5FEF;
+  background: none;
+}
+
+.circle>.years-text>mark:last-child {
+  color: #EF5DA8;
+  background: none;
+}
+
+.circle-items {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.circle-action-buttons {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: flex-start;
+}
+
+.circle-action-buttons>span {
+  line-height: auto;
+  font-size: 14px;
+  color: #42567A;
+  height: 18px;
+}
+
+.circle-action-buttons {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: flex-start;
+  gap: 20px;
+  padding-left: 80px;
+  /* TODO: fix block position */
+  margin-top: -40px;
+}
+
+.circle-action-buttons button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #9BA6BA;
+  background: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.circle-action-buttons button:last-child {
+  transform: rotate(180deg);
+  color: #9BA6BA;
+}
+
+.circle-action-buttons>div {
+  display: flex;
+  gap: 20px;
+}
+
+.swiper-slide-card>h2.title {
+  color: #3877EE;
+  line-height: 120%;
+  font-size: 25px;
+  margin: 0;
+}
+
+.swiper-slide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.swiper-slide-card>.description {
+  color: #42567A;
+  font-size: 20px;
+  line-height: 30px;
+  margin: 0;
+  /* NOTE: in case if swiper card description needs to be truncated */
+  /* text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden; */
+}
+
+.swiper-container {
+  margin-top: 56px;
+  padding: 0 80px;
+}
+
+.line-vertical {
+  position: absolute;
+  height: 100%;
+  border: 1px solid #E3E6ED;
 }

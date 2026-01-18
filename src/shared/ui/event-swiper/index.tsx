@@ -1,6 +1,6 @@
 import { FC, useState } from "react"
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react"
-import SwiperArrowIcon from "../icons/swiper-arrow"
+import SwiperArrowIcon from "../icons/swiper-arrow-next"
 import { IEventSwiperProps } from "./interface"
 import 'swiper/css'
 import 'swiper/css/navigation'

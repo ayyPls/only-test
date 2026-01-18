@@ -1,8 +1,10 @@
 
-interface IEventType8uttonProps {
+interface IEventTypeButtonProps {
     $elementIndex: number;
     $elementsCount: number;
     $activeIndex: number
+    $startAngleDeg?: number
+    
 }
 
-export type { IEventType8uttonProps }
+export type { IEventTypeButtonProps }

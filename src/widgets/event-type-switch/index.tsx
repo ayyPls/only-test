@@ -1,6 +1,7 @@
 import { FC } from "react"
-import { EventTypeButton } from "../../shared/ui"
+import { EventTypeRadialElement, RadialElementContentContainer } from "../../shared/ui"
 import { IEventTypeSwitchProps } from "./interface"
+import EventTypeArrowNext from "../../shared/ui/icons/event-type-arrow-next"
 
 
 const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTypeIndex, children, onClickEventType, onClickPrevEventType, onClickNextEventType }) => {
@@ -11,22 +12,17 @@ const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTyp
             <div className='circle-items'>
                 {
                     eventTypes.map((item, index, array) => (
-                        // TODO: refactor component
-                        <div key={index} style={{ display: 'flex', gap: 20 }}>
-                            <EventTypeButton
-                                type='button'
-                                onClick={() => onClickEventType(index)}
-                                // TODO: fix error with html-attribute
-                                $activeIndex={activeEventTypeIndex}
-                                key={index}
-                                $elementIndex={index}
-                                $elementsCount={array.length}
-                            >
-                                <span>{index + 1}</span>
-                            </EventTypeButton>
-                            {/* TODO: style event type name styles */}
-                            <div className='active-item-text'>{item}</div>
-                        </div>
+                        <EventTypeRadialElement
+                            key={index}
+                            $activeIndex={activeEventTypeIndex}
+                            $elementIndex={index}
+                            $elementsCount={array.length}
+                        >
+                            <RadialElementContentContainer>
+                                <button onClick={() => onClickEventType(index)}>{index + 1}</button>
+                                <span>{item}</span>
+                            </RadialElementContentContainer>
+                        </EventTypeRadialElement>
                     )
                     )
                 }
@@ -35,14 +31,15 @@ const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTyp
         <div className='line-horizontal' />
         <div className='line-vertical' />
         <div className='circle-action-buttons'>
+            {/* NOTE: this is ok until length of event types is < 10 */}
             <span>{`0${activeEventTypeIndex + 1}/0${eventTypes.length}`}</span>
             {/* TODO: disabled button styles */}
             <div>
                 <button disabled={activeEventTypeIndex === 0} type='button' onClick={onClickPrevEventType}>
-                    <img src='/assets/arrow.svg' alt='left arrow' />
+                    <EventTypeArrowNext />
                 </button>
                 <button disabled={activeEventTypeIndex === eventTypes.length - 1} type='button' onClick={onClickNextEventType}>
-                    <img src='/assets/arrow.svg' alt='right arrow' />
+                    <EventTypeArrowNext />
                 </button>
             </div>
         </div>

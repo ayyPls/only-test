@@ -37,7 +37,6 @@ const App = () => {
     // TODO: container should not count border width as container width
     <div className="layout">
       {/* TODO: look for a css way to do line break */}
-      {/* <div style={{height: 200}}></div> */}
       <PageHeading>Исторические <br />даты</PageHeading>
       <PageContentContainer>
         <EventTypeSwitch

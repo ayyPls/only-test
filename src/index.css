@@ -209,3 +209,57 @@ button:not([disabled]) {
   border: none;
   backdrop-filter: blur(15px);
 }
+
+@media screen and (max-width: 768px){
+  .layout {
+    padding: 20px;
+    margin: 0;
+    margin-top: 59px;
+    border: none;
+  }
+
+  .line-vertical, .line-horizontal {
+    display: none;
+  }
+  .circle {
+    padding: 56px 0;
+    border: none;
+    border-bottom: 1px solid #C7CDD9;
+    border-radius: 0;
+    width: 100%;
+    height: auto;
+  }
+  .circle > .years-text {
+    font-size: 56px;
+    /* margin: 0 auto; */
+    line-height: inherit;
+    transform: none;
+  }
+  .circle-items {
+    display: none;
+  }
+
+  .swiper-container {
+    padding-top: 20px;
+    margin: 0;
+    cursor: grab;
+  }
+
+  .swiper-slide-card>h2.title {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 120%;
+  }
+
+  .swiper-slide-card>.description {
+    font-size: 14px;
+    line-height: 145%;
+  }
+
+  .next-slide-button {
+    display: none;
+  }
+  .prev-slide-class, .next-slide-class {
+    opacity: .4;
+  }
+}

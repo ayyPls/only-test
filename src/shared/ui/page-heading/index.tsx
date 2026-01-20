@@ -19,6 +19,14 @@ const PageHeading = styled.h1`
       border-image: linear-gradient(to bottom, #3877EE, #EF5DA8) 1;
       margin: 7px 80px 7px 0;
     }
+    @media screen and (max-width: 768px) {
+      font-size: 20px;
+      position: inherit;
+      
+      &::before {
+        display: none;
+      }
+    }
 `
 
 export { PageHeading }

@@ -25,7 +25,19 @@ const EventSwiper: FC<IEventSwiperProps> = ({ events }) => {
         setIsReachedEnd(event.isEnd)
     }
     return <div className="swiper-container">
-        <Swiper slidesPerView={SWIPER_SLIDES_PER_VIEW} spaceBetween={80} onSlideChange={handleSlideChange}>
+        <Swiper breakpoints={{
+            0: {
+                // TODO: on last slide show whole slide
+                slidesPerView: 1.5,
+                spaceBetween: 25,
+                slidePrevClass: 'prev-slide-class',
+                slideNextClass: "next-slide-class",
+            },
+            768: {
+                slidesPerView: SWIPER_SLIDES_PER_VIEW,
+                spaceBetween: 80
+            }
+        }} onSlideChange={handleSlideChange}>
             {
                 events.map(({ description, datetime }, index) => (
                     // TODO: figure out slide sizes

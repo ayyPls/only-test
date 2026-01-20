@@ -30,10 +30,10 @@ const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTyp
         </div>
         <div className='line-horizontal' />
         <div className='line-vertical' />
-        <div className='circle-action-buttons'>
-            {/* NOTE: this is ok until length of event types is < 10 */}
+        {/* NOTE: this is ok until length of event types is < 10 */}
+        {/* TODO: move inside of swiper container */}
+        {/* <div className='circle-action-buttons'>
             <span>{`0${activeEventTypeIndex + 1}/0${eventTypes.length}`}</span>
-            {/* TODO: disabled button styles */}
             <div>
                 <button disabled={activeEventTypeIndex === 0} type='button' onClick={onClickPrevEventType}>
                     <EventTypeArrowNext />
@@ -42,7 +42,7 @@ const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTyp
                     <EventTypeArrowNext />
                 </button>
             </div>
-        </div>
+        </div> */}
     </>
 }
 

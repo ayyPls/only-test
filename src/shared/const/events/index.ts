@@ -11,16 +11,16 @@ const EVENTS: Array<IHistoryEvent> = [
     description: "Телескоп «Хаббл» обнаружил самую удалённую из всех обнаруженных галактик, получившую обозначение GN-z11",
     type: "Наука"
   },
-  // {
-  //   datetime: new Date('2017-07-20'),
-  //   description: "Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi",
-  //   type: "Наука"
-  // },
-  // {
-  //   datetime: new Date('2018-01-01'),
-  //   description: "Старт коспического аппарата Parker Solar Probe Plus, предназначенного для изучения Солнца",
-  //   type: "Наука"
-  // },
+  {
+    datetime: new Date('2017-07-20'),
+    description: "Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi",
+    type: "Наука"
+  },
+  {
+    datetime: new Date('2018-01-01'),
+    description: "Старт коспического аппарата Parker Solar Probe Plus, предназначенного для изучения Солнца",
+    type: "Наука"
+  },
   {
     datetime: new Date('2022-01-01'),
     description: "Корабль Crew Dragon вернулся на Землю из первого пилотируемого полета",

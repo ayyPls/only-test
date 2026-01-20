@@ -51,9 +51,9 @@ const App = () => {
             max={groupedEventsByType[groupedEventsByType.length - 1].datetime}
           />
         </EventTypeSwitch>
-        {/* TODO: add navigation buttons */}
         <EventSwiper events={groupedEventsByType} />
       </PageContentContainer>
+      {/* TODO: add navigation buttons */}
     </div>
   );
 }

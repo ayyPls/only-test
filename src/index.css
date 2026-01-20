@@ -216,6 +216,7 @@ button:not([disabled]) {
     margin: 0;
     margin-top: 59px;
     border: none;
+    height: 100%;
   }
 
   .line-vertical, .line-horizontal {
@@ -241,6 +242,7 @@ button:not([disabled]) {
 
   .swiper-container {
     padding-top: 20px;
+    padding-bottom: 78px;
     margin: 0;
     cursor: grab;
   }
@@ -262,4 +264,20 @@ button:not([disabled]) {
   .prev-slide-class, .next-slide-class {
     opacity: .4;
   }
+
+  .circle-action-buttons {
+    left: 0;
+    bottom: 0;
+    padding: 0;
+    position: absolute;
+    gap: 11px;
+  }
+  .circle-action-buttons>div{
+    gap: 16px;
+    scale: .5;
+    transform: translate(-50%, -50%);
+  }
+  /* .circle-action-buttons button{
+    scale: .5;
+  } */
 }

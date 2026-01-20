@@ -1,11 +1,13 @@
 import { FC, useState } from "react"
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react"
+import { Thumbs } from "swiper/modules"
 import SwiperArrowIcon from "../icons/swiper-arrow-next"
 import { IEventSwiperProps } from "./interface"
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
+import 'swiper/css/thumbs'
 import SwiperEvent from "swiper"
 
 
@@ -20,12 +22,14 @@ const SwiperNextSlideButton = () => {
 {/* TODO: add navigation buttons */ }
 const SWIPER_SLIDES_PER_VIEW = 3
 const EventSwiper: FC<IEventSwiperProps> = ({ events }) => {
+    const [thumbsSwiper, setThumbsSwiper] = useState<SwiperEvent>()
     const [isReachedEnd, setIsReachedEnd] = useState(false)
+
     const handleSlideChange = (event: SwiperEvent) => {
         setIsReachedEnd(event.isEnd)
     }
     return <div className="swiper-container">
-        <Swiper breakpoints={{
+        <Swiper modules={[Thumbs]} thumbs={{swiper: thumbsSwiper}} breakpoints={{
             0: {
                 // TODO: on last slide show whole slide
                 slidesPerView: 1.5,
@@ -52,6 +56,11 @@ const EventSwiper: FC<IEventSwiperProps> = ({ events }) => {
             {(isReachedEnd || events.length <= SWIPER_SLIDES_PER_VIEW) ? null : <SwiperNextSlideButton />}
 
             {/* TODO: swiper thumbs on mobile */}
+        </Swiper>
+        <Swiper spaceBetween={10} slidesPerView={events.length} freeMode modules={[Thumbs]} onSwiper={setThumbsSwiper} watchSlidesProgress thumbs={{swiper: thumbsSwiper}}>
+            {events.map(() => (
+                <SwiperSlide>1</SwiperSlide>
+            ))}
         </Swiper>
     </div>
 }

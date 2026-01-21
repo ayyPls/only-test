@@ -1,4 +1,5 @@
 import { FC, useState } from "react"
+import SwiperEvent from "swiper"
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react"
 import { Thumbs } from "swiper/modules"
 import SwiperArrowIcon from "../icons/swiper-arrow-next"
@@ -8,38 +9,36 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/thumbs'
-import SwiperEvent from "swiper"
 
 
 const SwiperNextSlideButton = () => {
     const swiper = useSwiper()
-    // console.log(swiper.activeIndex)
     return <button type="button" className="next-slide-button" onClick={() => swiper.slideNext()}>
         <SwiperArrowIcon color="#3877EE" />
     </button>
 }
 
-{/* TODO: add navigation buttons */ }
 const SWIPER_SLIDES_PER_VIEW = 3
 const EventSwiper: FC<IEventSwiperProps> = ({ events }) => {
-    const [thumbsSwiper, setThumbsSwiper] = useState<SwiperEvent>()
+    const [thumbsSwiper, setThumbsSwiper] = useState<SwiperEvent | null>(null)
     const [isReachedEnd, setIsReachedEnd] = useState(false)
 
     const handleSlideChange = (event: SwiperEvent) => {
         setIsReachedEnd(event.isEnd)
     }
     return <div className="swiper-container">
-        <Swiper modules={[Thumbs]} thumbs={{swiper: thumbsSwiper}} breakpoints={{
+        <Swiper modules={[Thumbs]} thumbs={{swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null}} breakpoints={{
             0: {
-                // TODO: on last slide show whole slide
                 slidesPerView: 1.5,
                 spaceBetween: 25,
                 slidePrevClass: 'prev-slide-class',
                 slideNextClass: "next-slide-class",
+                slidesOffsetAfter: 0,
             },
             768: {
                 slidesPerView: SWIPER_SLIDES_PER_VIEW,
-                spaceBetween: 80
+                spaceBetween: 80,
+                slidesOffsetAfter: 80,
             }
         }} onSlideChange={handleSlideChange}>
             {
@@ -51,15 +50,18 @@ const EventSwiper: FC<IEventSwiperProps> = ({ events }) => {
                     </SwiperSlide>
                 ))
             }
-            {/* TODO: fix button placement */}
-            <span className="swiper-wrappen-end" slot="wrapper-end"></span>
             {(isReachedEnd || events.length <= SWIPER_SLIDES_PER_VIEW) ? null : <SwiperNextSlideButton />}
-
-            {/* TODO: swiper thumbs on mobile */}
         </Swiper>
-        <Swiper spaceBetween={10} slidesPerView={events.length} freeMode modules={[Thumbs]} onSwiper={setThumbsSwiper} watchSlidesProgress thumbs={{swiper: thumbsSwiper}}>
-            {events.map(() => (
-                <SwiperSlide>1</SwiperSlide>
+        <Swiper
+            // slideToClickedSlide
+            spaceBetween={10}
+            slidesPerView={"auto"}
+            modules={[Thumbs]}
+            onSwiper={setThumbsSwiper}
+            watchSlidesProgress
+        >
+            {events.map((_thumb, index) => (
+                <SwiperSlide className="thumb-item" key={index} />
             ))}
         </Swiper>
     </div>

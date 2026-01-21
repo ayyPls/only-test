@@ -5,71 +5,78 @@ import { degToRad } from "../../utils";
 
 
 const RadialElementContentContainer = styled.div`
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-    
-    > span {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity ease-in-out .5s .6s;
-        color: #42567A;
-        font-weight: medium;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  transform-origin: 28px;
+
+  > span {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out 0.6s;
+    color: #42567a;
+    font-weight: 500;
+  }
+
+  > button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid #303e5850;
+    background: #42567a;
+    scale: 0.15;
+    transition: scale 0.5s ease, background 0.3s ease;
+
+    &:hover,
+    &:focus {
+      scale: 1;
+      background: #f4f5f9;
     }
-    // TODO: fix button content rotation on parent transform transition (on active event type change)
-    > button {
-        width: 56px;
-        height: 56px;
-        border-radius: 100%;
-        border: 1px solid #303E5850;
-        background: #42567A;
-        transition: scale ease-in-out .5s, background ease-in-out .3s;
-        scale: 0.15;
-        &:hover, &:focus {
-            scale: 1;
-            background: #F4F5F9;
-        }
-    }
-`
+  }
+`;
 
 
 const EventTypeRadialElement = styled.div<IEventTypeButtonProps>`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 20px;
-    line-height: 30px;
-    transition: transform ease-in-out .6s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  transition: transform 0.6s ease-in-out;
 
-    ${({$activeIndex, $elementIndex, $elementsCount, $startAngleDeg = DEFAUILT_ROTATE_DEG_ANGLE}) => {
-        const initialRotateRadAngle = degToRad($startAngleDeg)
-            const elementRotationRadAngle = 2 * Math.PI / $elementsCount * $elementIndex
-            const activeElementRotationRadAngle = 2 * Math.PI / $elementsCount * $activeIndex
-            const rotateRadAngle = elementRotationRadAngle - initialRotateRadAngle - activeElementRotationRadAngle
+  ${({ $activeIndex, $elementIndex, $elementsCount, $startAngleDeg = DEFAUILT_ROTATE_DEG_ANGLE }) => {
+    const startAngleRad = degToRad($startAngleDeg);
+    const step = (2 * Math.PI) / $elementsCount;
 
-            const isActiveElement = $activeIndex === $elementIndex
-        return `
-            transform:
-                translate(-28px, -28px)
-                rotate(${rotateRadAngle}rad)
-                translate(265px)
-                scale(1);
-            > div {
-                transform: rotate(${-rotateRadAngle}rad);
-                ${isActiveElement && `
-                    > button {
-                        scale: 1;
-                        background: #F4F5F9;
-                    }
-                    > span {
-                        visibility: visible;
-                        opacity: 1;
-                    }
-                `}
-            }
-        `
-    }}
-`
+    const rotateRad =
+      step * ($elementIndex - $activeIndex) - startAngleRad;
 
-export { RadialElementContentContainer, EventTypeRadialElement }
+    const isActive = $activeIndex === $elementIndex;
+
+    return `
+      transform:
+        rotate(${rotateRad}rad)
+        translateX(265px);
+
+      ${RadialElementContentContainer} {
+        transform: translate(-28px, -28px) rotate(${-rotateRad}rad);
+      }
+      ${isActive && `
+        ${RadialElementContentContainer} > button {
+          scale: 1;
+          background: #F4F5F9;
+        }
+
+        ${RadialElementContentContainer} > span {
+          opacity: 1;
+          visibility: visible;
+        }
+      `}
+    `;
+  }}
+`;
+
+export {
+  RadialElementContentContainer,
+  EventTypeRadialElement
+};

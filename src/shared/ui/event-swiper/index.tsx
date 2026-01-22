@@ -96,7 +96,7 @@ const EventSwiper: FC<IEventSwiperProps> = ({ events }) => {
             768: {
                 slidesPerView: SWIPER_SLIDES_PER_VIEW,
                 spaceBetween: 80,
-                slidesOffsetAfter: 120,
+                slidesOffsetAfter: 80,
             }
         }} onSlideChange={handleSlideChange}>
             {

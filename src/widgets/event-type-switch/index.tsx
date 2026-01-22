@@ -81,6 +81,7 @@ const LineVertical = styled.div`
 const EventTypeActionsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   width: fit-content;
   align-items: flex-start;
   gap: 20px;
@@ -152,7 +153,7 @@ const EventTypeSwitch: FC<IEventTypeSwitchProps> = ({ eventTypes, activeEventTyp
         </EventTypeSwitchContainer>
         <LineHorizontal />
         <LineVertical />
-        <EventTypeActionsContainer className="circle-action-buttons">
+        <EventTypeActionsContainer>
             {/* NOTE: this is ok until length of event types is in range [2...10] */}
             <span>{`0${activeEventTypeIndex + 1}/0${eventTypes.length}`}</span>
             <EventTypeActionButtonsContainer>

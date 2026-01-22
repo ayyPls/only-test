@@ -37,7 +37,7 @@ main {
   z-index: 2;
   background-color: white;
   border: none;
-  backdrop-filter: blur(15px);
+  filter: drop-shadow(0 0 15px #5D5FEF10);
 }
 
 @media screen and (max-width: 768px){

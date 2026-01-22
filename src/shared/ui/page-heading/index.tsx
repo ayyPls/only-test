@@ -6,8 +6,8 @@ const PageHeading = styled.h1`
     top: 170px;
     display: flex;
     margin: 0;
-    font-size: 56px;
-    color: #42567A;
+    font-size: ${({theme}) => theme.fontSize.xl};
+    color: ${({theme}) => theme.color.text.primary};
     line-height: 120%;
     white-space: pre-line;
     width: fit-content;
@@ -16,7 +16,11 @@ const PageHeading = styled.h1`
     &::before {
       content: "";
       border: 2px solid;
-      border-image: linear-gradient(to bottom, #3877EE, #EF5DA8) 1;
+      border-image: linear-gradient(
+        to bottom,
+        ${({theme}) => theme.color.text.hightlightPrimary},
+        ${({theme}) => theme.color.text.hightlightSecondary}
+      ) 1;
       margin: 7px 80px 7px 0;
     }
     @media screen and (max-width: 768px) {

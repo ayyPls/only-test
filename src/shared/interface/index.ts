@@ -3,7 +3,6 @@ interface IHistoryEvent {
     datetime: Date
     type: string
 }
-// TODO: move?
 interface IIconProps {
     color?: string
     width?: number

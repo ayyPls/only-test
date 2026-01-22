@@ -1,7 +1,7 @@
 import { FC, useLayoutEffect, useRef } from "react"
-import { IEventDateRangeProps, IEventYearProps, IYearDigitProps } from "./interface";
-import gsap from "gsap";
 import styled from "styled-components";
+import gsap from "gsap";
+import { IEventDateRangeProps, IEventYearProps, IYearDigitProps } from "./interface";
 
 
 const YearDigitContainer = styled.span`
@@ -33,23 +33,23 @@ const YearContainer = styled.div`
 const EventDateRangeContainer = styled.div`
     display: inline-flex;
     position: relative;
-    font-size: 200px;
+    font-size: ${({theme}) => theme.fontSize["2xl"]};
     text-wrap: nowrap;
     font-weight: bold;
     letter-spacing: -0.02em;
     line-height: 160px;
     transform: translateX(-16px);
     > mark:first-child {
-        color: #5D5FEF;
+        color: ${({theme}) => theme.color.text.hightlightPrimary};
         background: none;
     }
-        > mark:last-child {
-        color: #EF5DA8;
+    > mark:last-child {
+        color: ${({theme}) => theme.color.text.hightlightSecondary};
+        color: ;
         background: none;
     }
     @media (max-width: 768px) {
-        font-size: 56px;
-        /* margin: 0 auto; */
+        font-size: ${({theme}) => theme.fontSize.xl};
         line-height: inherit;
         transform: none;
     }

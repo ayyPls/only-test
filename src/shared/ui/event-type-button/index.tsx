@@ -9,22 +9,22 @@ const RadialElementContentContainer = styled.div`
   align-items: center;
   gap: 20px;
 
-  transform-origin: 28px;
+  transform-origin: ${({theme}) => theme.circleItemSize / 2}px;
 
   > span {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out 0.6s;
-    color: #42567a;
+    color: ${({theme}) => theme.color.text.primary};
     font-weight: 500;
   }
 
   > button {
-    width: 56px;
-    height: 56px;
+    width: ${({theme}) => theme.circleItemSize}px;
+    height: ${({theme}) => theme.circleItemSize}px;
     border-radius: 50%;
     border: 1px solid #303e5850;
-    background: #42567a;
+    background: ${({theme}) => theme.color.text.primary};
     scale: 0.15;
     transition: scale 0.5s ease, background 0.3s ease;
 
@@ -44,7 +44,7 @@ const EventTypeRadialElement = styled.div<IEventTypeButtonProps>`
   transform-origin: 0 0;
   transition: transform 0.6s ease-in-out;
 
-  ${({ $activeIndex, $elementIndex, $elementsCount, $startAngleDeg = DEFAUILT_ROTATE_DEG_ANGLE }) => {
+  ${({ $activeIndex, $elementIndex, $elementsCount, $startAngleDeg = DEFAUILT_ROTATE_DEG_ANGLE, theme }) => {
     const startAngleRad = degToRad($startAngleDeg);
     const step = (2 * Math.PI) / $elementsCount;
 
@@ -56,10 +56,10 @@ const EventTypeRadialElement = styled.div<IEventTypeButtonProps>`
     return `
       transform:
         rotate(${rotateRad}rad)
-        translateX(265px);
+        translateX(${theme.circleRadius / 2}px);
 
       ${RadialElementContentContainer} {
-        transform: translate(-28px, -28px) rotate(${-rotateRad}rad);
+        transform: translate(${-theme.circleItemSize / 2}px, ${-theme.circleItemSize / 2}px) rotate(${-rotateRad}rad);
       }
       ${isActive && `
         ${RadialElementContentContainer} > button {
